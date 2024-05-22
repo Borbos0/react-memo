@@ -1,8 +1,7 @@
 import { createContext, useState } from "react";
 
 export const ModeContext = createContext(null);
-
-export const GameModeContext = ({ children }) => {
+export const GameModeContextProvider = ({ children }) => {
   const [isEasyMode, setIsEasyMode] = useState(false);
 
   const chooseMode = () => {
