@@ -5,6 +5,7 @@ import styles from "./Cards.module.css";
 import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
+import { useModeContext } from "../Context/useModeContext";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -13,7 +14,6 @@ const STATUS_WON = "STATUS_WON";
 const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 const STATUS_PREVIEW = "STATUS_PREVIEW";
-
 function getTimerValue(startDate, endDate) {
   if (!startDate && !endDate) {
     return {
@@ -41,6 +41,10 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+  // Контекс упрощенного режима игры
+  const { isEasyMode } = useModeContext();
+  // Количество жизней для упрощенного режима
+  const [isLife, setIsLife] = useState(isEasyMode ? 2 : 1);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -124,9 +128,26 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     });
 
     const playerLost = openCardsWithoutPair.length >= 2;
+    // Включение упрощенного режима
+    if (isEasyMode) {
+      if (playerLost) {
+        openCardsWithoutPair.forEach(wrongCard => {
+          const foundWrongCard = nextCards.find(card => card.id === wrongCard.id);
+          if (foundWrongCard) {
+            foundWrongCard.open = false;
+          }
+        });
 
-    // "Игрок проиграл", т.к на поле есть две открытые карты без пары
-    if (playerLost) {
+        setIsLife(isLife => isLife - 1);
+        if (isLife === 0) {
+          finishGame(STATUS_LOST);
+          // Восстанавливаем здоровье
+          setIsLife(2);
+          return;
+        }
+        setCards([...nextCards]);
+      }
+    } else if (playerLost) {
       finishGame(STATUS_LOST);
       return;
     }

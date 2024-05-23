@@ -4,7 +4,6 @@ import { useModeContext } from "../../components/Context/useModeContext";
 
 export function SelectLevelPage() {
   const { isEasyMode, chooseMode } = useModeContext();
-
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -30,7 +29,8 @@ export function SelectLevelPage() {
           <label className={styles.modeText}>
             <input className={styles.modeInput} type="checkbox" checked={isEasyMode} onChange={e => chooseMode()} />
             Упрощенный режим
-            {isEasyMode ? "123" : "456"}
+            <br />
+            {isEasyMode ? <p>(у вас будет 3 жизни)</p> : ""}
           </label>
         </div>
       </div>
