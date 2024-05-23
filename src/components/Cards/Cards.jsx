@@ -44,7 +44,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   // Контекс упрощенного режима игры
   const { isEasyMode } = useModeContext();
   // Количество жизней для упрощенного режима
-  const [isLife, setIsLife] = useState(isEasyMode ? 2 : 1);
+  const [isLife, setIsLife] = useState(isEasyMode ? 3 : 1);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -139,10 +139,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         });
 
         setIsLife(isLife => isLife - 1);
-        if (isLife === 0) {
+        if (isLife === 1) {
           finishGame(STATUS_LOST);
           // Восстанавливаем здоровье
-          setIsLife(2);
+          setIsLife(3);
           return;
         }
         setCards([...nextCards]);
@@ -205,18 +205,21 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           ) : (
             <>
               <div className={styles.timerValue}>
-                <div className={styles.timerDescription}>min</div>
+                <div className={styles.timerDescription}>мин</div>
                 <div>{timer.minutes.toString().padStart("2", "0")}</div>
               </div>
               :
               <div className={styles.timerValue}>
-                <div className={styles.timerDescription}>sec</div>
+                <div className={styles.timerDescription}>сек</div>
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        <div className={styles.easyMode}>
+          {isEasyMode && status === STATUS_IN_PROGRESS ? <p>У вас осталось {isLife} жизни</p> : null}
+          {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        </div>
       </div>
 
       <div className={styles.cards}>
