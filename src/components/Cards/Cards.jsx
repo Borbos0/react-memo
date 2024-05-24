@@ -134,7 +134,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         openCardsWithoutPair.forEach(wrongCard => {
           const foundWrongCard = nextCards.find(card => card.id === wrongCard.id);
           if (foundWrongCard) {
-            foundWrongCard.open = false;
+            setTimeout(() => {
+              foundWrongCard.open = false;
+            }, 1000);
           }
         });
 
