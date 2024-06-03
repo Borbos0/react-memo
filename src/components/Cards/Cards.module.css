@@ -70,3 +70,16 @@
 
   margin-bottom: -12px;
 }
+.easyMode {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.easyMode p {
+  color: #fff;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: StratosSkyeng;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
