@@ -1,0 +1,81 @@
+.leaderContainer {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mainBlock {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 52px;
+  margin-bottom: 40px;
+}
+
+.title {
+  color: #ffffff;
+  text-align: center;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: StratosSkyeng;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 48px;
+}
+.startGameBtn {
+  width: 246px;
+  border-radius: 12px;
+  background: #7ac100;
+  color: #fff;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: StratosSkyeng;
+  font-size: 24px;
+  font-style: normal;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  padding-top: 9px;
+}
+
+.listContainer {
+  display: flex;
+  align-items: center;
+}
+
+.leaderItem {
+  width: 944px;
+  height: 64px;
+  top: 142px;
+  left: 40px;
+  gap: 0px;
+  opacity: 0px;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  list-style: none;
+}
+.infoLeaderContainer {
+  display: grid;
+  grid-template-columns: 0.4fr 1fr 0.15fr;
+  padding: 20px;
+}
+
+.infoAboutLeader {
+  color: #000000;
+  font-family: StratosSkyeng;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.infoAboutLeaderTop {
+  color: rgb(153, 153, 153);
+  font-family: StratosSkyeng;
+  text-decoration: none;
+  font-size: 24px;
+}
