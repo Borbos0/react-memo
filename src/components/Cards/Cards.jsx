@@ -6,7 +6,6 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useModeContext } from "../Context/useModeContext";
-import { LeaderboardModal } from "../../pages/LeaderboardPage/LeaderboardModal";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -112,7 +111,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     const isPlayerWon = nextCards.every(card => card.open);
 
     // Победа - все карты на поле открыты
-    if (isPlayerWon && !isEasyMode && pairsCount === 9) {
+    if (isPlayerWon && pairsCount === 9) {
       finishGame(STATUS_LEADER);
     } else if (isPlayerWon) {
       finishGame(STATUS_WON);
@@ -255,7 +254,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       ) : null}
       {isGameEndedLeaderboard ? (
         <div className={styles.modalContainer}>
-          <LeaderboardModal
+          <EndGameModal
             isLeader={status === STATUS_LEADER}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}

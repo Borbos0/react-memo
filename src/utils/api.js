@@ -12,6 +12,9 @@ export async function getLeaderboard() {
 }
 
 export async function postLeaderboard({ name, time }) {
+  if (name === " " || name === undefined || name === null || name === "") {
+    name = "Пользователь";
+  }
   const response = await fetch(baseUrl, {
     method: "POST",
     body: JSON.stringify({ name, time }),
