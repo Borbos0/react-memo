@@ -242,17 +242,19 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         ))}
       </div>
 
-      {isGameEnded ? (
+      {isGameEnded || isGameEndedLeaderboard ? (
         <div className={styles.modalContainer}>
           <EndGameModal
-            isWon={status === STATUS_WON}
+            // {isGameEndedLeaderboard ? (isLeader={status === STATUS_LEADER}) : (isWon={status === STATUS_WON})}
+            isWon={isGameEnded ? status === STATUS_WON : ""}
+            isLeader={isGameEndedLeaderboard ? status === STATUS_LEADER : ""}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
           />
         </div>
       ) : null}
-      {isGameEndedLeaderboard ? (
+      {/* {isGameEndedLeaderboard ? (
         <div className={styles.modalContainer}>
           <EndGameModal
             isLeader={status === STATUS_LEADER}
@@ -261,7 +263,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             onClick={resetGame}
           />
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

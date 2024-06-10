@@ -9,6 +9,7 @@ import { useState } from "react";
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState(false);
+  const [error, setError] = useState(false);
 
   const title = isWon ? "Вы победили!" : "Вы проиграли!";
 
@@ -23,8 +24,13 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const postLeader = async event => {
     event.preventDefault();
     const data = { name: name, time: gameTime };
-    postLeaderboard(data);
-    setMessage(true);
+    if (!data.name || data.name === "" || data.name === undefined || data.name === null) {
+      setError(true);
+    } else {
+      postLeaderboard(data);
+      setError(false);
+      setMessage(true);
+    }
   };
   return (
     <>
@@ -38,10 +44,10 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
               type="text"
               name="name"
               value={name}
-              defaultValue={"Пользователь"}
               onChange={e => setName(e.target.value)}
               placeholder="Пользователь"
             ></input>
+            {error && <p className={styles.error}>Введите имя</p>}
             <p className={styles.description}>Затраченное время:</p>
             <div className={styles.time}>
               {gameDurationMinutes.toString().padStart("2", "0")}:{gameDurationSeconds.toString().padStart("2", "0")}
