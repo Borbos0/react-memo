@@ -79,6 +79,11 @@ export function SelectLevelPage() {
             {isEasyMode ? <p>(у вас будет 3 жизни)</p> : ""}
           </label>
         </div>
+        <div>
+          <Link to={"/leaderboard"}>
+            <p className={styles.leaderboard}>Перейти к лидерборду</p>
+          </Link>
+        </div>
       </div>
     </div>
   );
