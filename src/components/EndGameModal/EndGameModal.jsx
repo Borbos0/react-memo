@@ -5,8 +5,12 @@ import celebrationImageUrl from "./images/celebration.png";
 import { postLeaderboard } from "../../utils/api";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useModeContext } from "../Context/useModeContext";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
+  const { isEasyMode } = useModeContext();
+  const { alahomoraMode } = useModeContext();
+
   const [name, setName] = useState("");
   const [message, setMessage] = useState(false);
   const [error, setError] = useState(false);
@@ -23,7 +27,14 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
   const postLeader = async event => {
     event.preventDefault();
-    const data = { name: name, time: gameTime };
+    const userAchievements = [];
+    if (!isEasyMode) {
+      userAchievements.push(1);
+    }
+    if (!alahomoraMode) {
+      userAchievements.push(2);
+    }
+    const data = { name: name, time: gameTime, achievements: userAchievements };
     if (!data.name || data.name === "" || data.name === undefined || data.name === null) {
       setError(true);
     } else {

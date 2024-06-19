@@ -83,3 +83,72 @@
   font-style: normal;
   font-weight: 400;
 }
+.powerBlock {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+.powerBtn {
+  background-color: #c2f5ff;
+  border-radius: 50px;
+  outline: none;
+  border: none;
+  width: 68px;
+  height: 68px;
+  cursor: pointer;
+}
+.alahomoraImg {
+  width: 56px;
+  height: 34px;
+}
+.revealImg {
+  width: 46px;
+  height: 49px;
+}
+.alahomoraBlock {
+  position: relative;
+  border-radius: 50%;
+  background-color: rgb(194, 245, 255);
+  border: none;
+  padding: 2.5px;
+  text-align: center;
+  text-decoration: none;
+}
+.revealBlock {
+  position: relative;
+}
+.additionalInfo {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 80px;
+  left: -90px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 222px;
+  height: auto;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 24px;
+  color: #004980;
+  background-color: #c2f5ff;
+}
+
+.infoHeading {
+  text-align: center;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.infoText {
+  display: block;
+  text-align: center;
+}
+
+.alahomoraBlock:hover .additionalInfo,
+.revealBlock:hover .additionalInfo {
+  display: block;
+}

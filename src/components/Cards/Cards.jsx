@@ -6,6 +6,8 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useModeContext } from "../Context/useModeContext";
+import reveal from "../EndGameModal/images/reveal.png";
+import alahomora from "../EndGameModal/images/alahomora.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -43,6 +45,8 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+  // Контекст супер силы "Алахомора"
+  const { alahomoraMode, setAlahomoraMode } = useModeContext();
   // Контекс упрощенного режима игры
   const { isEasyMode } = useModeContext();
   // Количество жизней для упрощенного режима
@@ -80,6 +84,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
     setIsLife(3);
+    setAlahomoraMode(false);
   }
 
   /**
@@ -161,6 +166,18 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // ... игра продолжается
   };
+  const useAlahomora = () => {
+    if (!alahomoraMode) {
+      const notOpenCards = cards.filter(card => !card.open);
+      const randomCard = notOpenCards[Math.floor(Math.random() * notOpenCards.length)];
+      const randomPair = notOpenCards.filter(
+        notOpenCards => randomCard.suit === notOpenCards.suit && randomCard.rank === notOpenCards.rank,
+      );
+      randomPair[0].open = true;
+      randomPair[1].open = true;
+      setAlahomoraMode(true);
+    }
+  };
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
   const isGameEndedLeaderboard = status === STATUS_LEADER;
@@ -224,6 +241,36 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
+        {status === STATUS_IN_PROGRESS ? (
+          <div className={styles.powerBlock}>
+            <div className={styles.alahomoraBlock}>
+              <button className={styles.powerBtn} onClick={useAlahomora}>
+                <img className={styles.alahomoraImg} src={alahomora} alt="Алахомора" />
+              </button>
+              <div className={styles.additionalInfo}>
+                {!alahomoraMode ? (
+                  <>
+                    <span className={styles.infoHeading}>Алахамора</span>
+                    <span className={styles.infoText}>Открывается случайная пара карт.</span>
+                  </>
+                ) : (
+                  <span className={styles.infoHeading}>Можно использовать один раз за игру!</span>
+                )}
+              </div>
+            </div>
+            <div className={styles.revealBlock}>
+              <button className={styles.powerBtn}>
+                <img className={styles.revealImg} src={reveal} alt="Прозрение" />
+              </button>
+              <div className={styles.additionalInfo}>
+                <span className={styles.infoHeading}>Прозрение</span>
+                <span className={styles.infoText}>
+                  На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается. (inProcess)
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <div className={styles.easyMode}>
           {isEasyMode && status === STATUS_IN_PROGRESS ? <p>У вас осталось {isLife} жизни</p> : null}
           {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
@@ -245,7 +292,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       {isGameEnded || isGameEndedLeaderboard ? (
         <div className={styles.modalContainer}>
           <EndGameModal
-            // {isGameEndedLeaderboard ? (isLeader={status === STATUS_LEADER}) : (isWon={status === STATUS_WON})}
             isWon={isGameEnded ? status === STATUS_WON : ""}
             isLeader={isGameEndedLeaderboard ? status === STATUS_LEADER : ""}
             gameDurationSeconds={timer.seconds}
@@ -254,16 +300,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         </div>
       ) : null}
-      {/* {isGameEndedLeaderboard ? (
-        <div className={styles.modalContainer}>
-          <EndGameModal
-            isLeader={status === STATUS_LEADER}
-            gameDurationSeconds={timer.seconds}
-            gameDurationMinutes={timer.minutes}
-            onClick={resetGame}
-          />
-        </div>
-      ) : null} */}
     </div>
   );
 }

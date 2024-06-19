@@ -62,7 +62,7 @@
 }
 .infoLeaderContainer {
   display: grid;
-  grid-template-columns: 0.4fr 1fr 0.15fr;
+  grid-template-columns: 0.4fr 1fr 1fr 0.2fr;
   padding: 20px;
 }
 
@@ -78,4 +78,25 @@
   font-family: StratosSkyeng;
   text-decoration: none;
   font-size: 24px;
+}
+.infoAboutAchievements {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+img {
+  width: 30px;
+  height: 32px;
+}
+.imageActive:hover::after {
+  content: attr(data-title);
+  z-index: 1;
+  position: absolute;
+  background-color: rgb(194, 245, 255);
+  color: rgb(0, 73, 128);
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
 }
