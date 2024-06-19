@@ -1,4 +1,4 @@
-const baseUrl = "https://wedev-api.sky.pro/api/leaderboard";
+const baseUrl = "https://wedev-api.sky.pro/api/v2/leaderboard";
 export async function getLeaderboard() {
   const response = await fetch(baseUrl, {
     method: "GET",
@@ -11,13 +11,13 @@ export async function getLeaderboard() {
   }
 }
 
-export async function postLeaderboard({ name, time }) {
+export async function postLeaderboard({ name, time, achievements }) {
   if (name === " " || name === undefined || name === null || name === "") {
     name = "Пользователь";
   }
   const response = await fetch(baseUrl, {
     method: "POST",
-    body: JSON.stringify({ name, time }),
+    body: JSON.stringify({ name, time, achievements }),
   });
   if (!response.ok) {
     throw new Error("Некорректные данные");

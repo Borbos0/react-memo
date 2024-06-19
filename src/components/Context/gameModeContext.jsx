@@ -7,5 +7,12 @@ export const GameModeContextProvider = ({ children }) => {
   const chooseMode = () => {
     setIsEasyMode(isEasyMode => !isEasyMode);
   };
-  return <ModeContext.Provider value={{ isEasyMode, chooseMode }}>{children}</ModeContext.Provider>;
+
+  const [alahomoraMode, setAlahomoraMode] = useState(false);
+
+  return (
+    <ModeContext.Provider value={{ isEasyMode, chooseMode, alahomoraMode, setAlahomoraMode }}>
+      {children}
+    </ModeContext.Provider>
+  );
 };
